@@ -87,4 +87,21 @@ func main() {
 		delete(m, "Miss Money Penny")
 	}
 
+	var arr1 [3]int
+	fmt.Println(arr1)
+	fmt.Printf("%T\n", arr1)
+
+	var arr2 [3]string = [3]string{"A", "B"}
+	fmt.Printf("%s\n", arr2)
+
+	arr3 := [3]int{1, 2, 3}
+	fmt.Println(arr3)
+
+	//配列
+	arr4 := [...]string{"1", "2", "3", "4", "5"}
+	//slice
+	// arr4 := []string{"1", "2", "3", "4", "5"}
+	fmt.Println(arr4)
+	arr4 = append(arr4, "1")
+
 }
