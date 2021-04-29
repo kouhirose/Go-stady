@@ -39,5 +39,17 @@ func main() {
 	//string to char
 	var h string = "hello world"
 	b := []byte(h)
-	fmt.Printf("%c", b)
+	fmt.Printf("%c\n", b)
+
+	var x2 interface{} = 3
+
+	//int 型に復元
+	i = x2.(int)
+	fmt.Println(i)
+
+	// でinterfaceをfloatに変換するとfloat64に復元できない
+	// 第2引数を加えるとエラーにならん
+	// f := x2.(float64)
+	f, isFloat64 := x2.(float64)
+	fmt.Println(f, isFloat64)
 }
