@@ -77,9 +77,81 @@ func main() {
 	// チャネルのclose
 	ch20 := make(chan int, 2)
 	ch20 <- 100
+	// クローズしてもチャネルから値は取り出せる
 	close(ch20)
 	fmt.Println(<-ch20)
 	// chがopenならokにtrue,closeでかつ空ならfalse
 	i, ok := <-ch20
 	fmt.Println(i, ok)
+
+	//channel for
+	cha := make(chan int, 3)
+	cha <- 111
+	cha <- 222
+	cha <- 333
+	close(cha)
+	// for i := 0; i < 3; i++ {
+	// 	fmt.Println(<-cha)
+	// }
+	// chanellでrange for使うときは先にcloseしておく
+	for i := range cha {
+		fmt.Println(i)
+	}
+
+	// chanell select
+	c1 := make(chan int, 2)
+	c2 := make(chan string, 2)
+
+	// c2 <- "A"
+	// v1 := <-c1
+	// v2 := <-c2
+	// fmt.Println(v1)
+	// fmt.Println(v2)
+	// チャネルのエラーで全体のプログラムが止まらないようにする
+
+	// どのケース式が実行されるかランダム
+	// どれかしらのチャネルに値が入ってればok
+	select {
+	case v1 := <-c1:
+		fmt.Println(v1 + 1000)
+	case v2 := <-c2:
+		fmt.Println(v2 + "!!!")
+	default:
+		fmt.Println("全部のチャンネルに値無いよ")
+	}
+
+	c3 := make(chan int)
+	c4 := make(chan int)
+	c5 := make(chan int)
+
+	go func() {
+		for {
+			i := <-c3
+			c4 <- i * 2
+		}
+	}()
+
+	go func() {
+		for {
+			i2 := <-c4
+			c5 <- i2 - 1
+		}
+	}() //このカッコ何
+
+	n := 0
+L:
+	for {
+		select {
+		case c3 <- n:
+			n++
+		case i3 := <-c5:
+			fmt.Println("received", i3)
+		default:
+			if n > 10000 {
+				break L
+			}
+
+		}
+
+	}
 }
