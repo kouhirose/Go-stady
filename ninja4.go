@@ -58,5 +58,21 @@ func main() {
 		for j, val := range v {
 			fmt.Printf("\t%v %v\n", j, val)
 		}
+
+	}
+
+	m := map[string][]string{
+		"bond":  []string{"shalemm,not striie", "matrins", "women"},
+		"meney": []string{"shale", "egg", "men"},
+		"no_dr": []string{"shalemm,not striie", "matrins", "women"},
+	}
+
+	fmt.Println(m)
+
+	for k, v := range m {
+		fmt.Println("this is record for", k)
+		for i, v2 := range v {
+			fmt.Println("\t", i, v2)
+		}
 	}
 }
